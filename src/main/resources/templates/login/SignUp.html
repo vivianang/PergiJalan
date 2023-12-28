@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/loginStyle/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/loginStyle/css/style.css">
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="/loginStyle/images/signin-image.jpg" alt="sing up image"></figure>
+                        <a href="/" class="signup-image-link">I am already member</a>
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" class="register-form" id="login-form" th:action="@{/sign-up}" th:object=${userDetail}>
+                        	<div th:if="${errorMessage}" style="color: red;">
+            					<h3 th:text="${errorMessage}" class="alert"> aaa</h3>
+            				</div>
+                            <div class="form-group">
+                                <label for="username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="username" id="username" placeholder="Username" th:object="${user}" th:field="*{username}"/>
+                            </div>
+                     <!--         <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="text" name="name" id="name" placeholder="name" th:field="*{name}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="Email" name="Email" id="Email" placeholder="email" th:object="${user}" th:field="*{email}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="text" name="contact" id="contact" placeholder="contact" th:field="*{contact}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="address"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="text" name="address" id="address" placeholder="address" th:field="*{address}"/>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="password" placeholder="Password" th:object="${user}" th:field="*{password}"/>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Sign Up"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="/loginStyle/vendor/jquery/jquery.min.js"></script>
+    <script src="/loginStyle/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

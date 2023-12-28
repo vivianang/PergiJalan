@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <style>
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .image-box {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .checkbox-design {
+        	width: 25px;
+        	height: 25px;
+        	margin-top: 11px;
+        }
+        
+        .checkmark {
+        	margin-left: 6px;
+        }
+        
+    </style>
+    <title>Zay Shop - Add Attraction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="/userStyle/assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="stylesheet" href="/userStyle/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/templatemo.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/custom.css">
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="/userStyle/assets/css/fontawesome.min.css">
+    <!-- Load map styles -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+ 
+  </head>
+  <body>
+    <nav th:replace="~{_header :: header}"></nav>
+    
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="w-100 pt-1 mb-5 text-right">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="get" class="modal-content modal-body border-0 p-0">
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+            <button type="submit" class="input-group-text bg-success text-light">
+              <i class="fa fa-fw fa-search text-white"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Start Contact -->
+    <div class="container py-5">
+      <div class="row py-5">
+        <form action="" th:object="${placeTxn}" enctype="multipart/form-data" id="contact-form" class="col-md-9 m-auto" method="POST" role="form">
+          <!--   <div class="row"><div class="form-group col-md-6 mb-3"><label for="inputname"><b>Website</b></label><input type="text" class="form-control mt-1" id="name" name="name" placeholder="Name"></div><div class="form-group col-md-6 mb-3"><label for="inputemail"><b>Address</b></label><input type="email" class="form-control mt-1" id="email" name="email" placeholder="Email"></div></div>-->
+          <div class="mb-3">
+             <b>Attraction Name</b>
+            <input type="text" class="form-control mt-1" id="attraction" placeholder="Attraction Name" th:field="*{name}" autocomplete="on" required>
+          </div>
+          <div class="mb-3">
+             <b>Address</b>
+            <input type="text" class="form-control mt-1" id="address" placeholder="Address" th:field="*{address}" autocomplete="on">
+          </div>
+          <div class="mb-3">
+            <b>Description</b>
+            <textarea id="message" class="form-control mt-1" placeholder="Description" th:field="*{description}" rows="8"></textarea>
+          </div>
+          <div class="mb-3">
+            <b>Website</b>
+            <input type="text" class="form-control mt-1" id="website" placeholder="Website" th:field="*{website}" autocomplete="on">
+          </div>
+          
+          
+       
+          
+          
+          <div class="mb-3">
+			<b>Choose Category:</b>
+			<select class="form-control mt-1" th:field="*{category}" required>
+				<option value="">Select Category</option>
+				<option  class="form-control mt-1" th:each="data : ${category}" th:value="${data.id}" th:text="${data.name}">
+				</option>
+			</select>
+		  </div>
+          
+          
+          <div class="mb-3">
+            <b>Harga Tiket (Opsional)</b>
+          </div>
+          <div class="row">
+            <div class="col-lg-2">
+              <b>Senin</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketSenin" id="hargaTiketSenin">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <b>Selasa</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketSelasa" id="hargaTiketSelasa">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <b>Rabu</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketRabu" id="hargaTiketRabu">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <b>Kamis</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketKamis" id="hargaTiketKamis">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <b>Jumat</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketJumat" id="hargaTiketJumat">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <b>Sabtu</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketSabtu" id="hargaTiketSabtu">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <b>Minggu</b>
+            </div>
+            <div class="col-lg-10">
+              <fieldset>
+                <input type="number" class="form-control mt-1" name="hargaTiketMinggu" id="hargaTiketMinggu">
+              </fieldset>
+            </div>
+          </div>
+          <br>
+          
+          
+		  <div class="mb-3">
+            <b>Jam Buka (Opsional)</b>
+          </div>
+          <div class="row">
+            <div class="col-lg-2">
+              <b>Senin</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaSenin" id="jamBukaSenin">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupSenin" id="jamTutupSenin">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxSenin" id="closedCheckboxSenin"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+            
+            
+            <div class="col-lg-2">
+              <b>Selasa</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaSelasa" id="jamBukaSelasa">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupSelasa" id="jamTutupSelasa">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxSelasa" id="closedCheckboxSelasa"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+            <div class="col-lg-2">
+              <b>Rabu</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaRabu" id="jamBukaRabu">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupRabu" id="jamTutupRabu">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxRabu" id="closedCheckboxRabu"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+            <div class="col-lg-2">
+              <b>Kamis</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaKamis" id="jamBukaKamis">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupKamis" id="jamTutupKamis">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxKamis" id="closedCheckboxKamis"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+            <div class="col-lg-2">
+              <b>Jumat</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaJumat" id="jamBukaJumat">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupJumat" id="jamTutupJumat">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxJumat" id="closedCheckboxJumat"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+            <div class="col-lg-2">
+              <b>Sabtu</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaSabtu" id="jamBukaSabtu">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupSabtu" id="jamTutupSabtu">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxSabtu" id="closedCheckboxSabtu"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+            <div class="col-lg-2">
+              <b>Minggu</b>
+            </div>
+            <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamBukaMinggu" id="jamBukaMinggu">
+              </fieldset>
+            </div>
+             <div class="col-lg-4">
+              <fieldset>
+                <input type="time" class="form-control mt-1" name="jamTutupMinggu" id="jamTutupMinggu">
+              </fieldset>
+            </div>
+            <div class="col-lg-2">
+              <fieldset>
+                <input type="checkbox" class="checkbox-design" name="checkboxMinggu" id="closedCheckboxMinggu"> 
+                <span class="checkmark">Closed</span>
+              </fieldset>
+            </div>
+            
+          </div>
+          <br>
+          <b>Upload Foto: </b>
+          <input name="files" type="file" id="file-input" accept="image/*" multiple>
+                 
+          <div class="image-container" id="image-container"></div>
+          
+          <div class="row">
+            <div class="col text-end mt-2">
+              <button type="submit" class="btn btn-success btn-lg px-3">Add Attraction</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Contact -->
+    
+	<nav th:replace="~{_footer :: footer}"></nav>
+	
+    <!-- Start Script -->
+    <script src="/userStyle/assets/js/jquery-1.11.0.min.js"></script>
+    <script src="/userStyle/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/userStyle/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/userStyle/assets/js/templatemo.js"></script>
+    <script src="/userStyle/assets/js/custom.js"></script>
+    
+     <script>
+        const fileInput = document.getElementById('file-input');
+        const addImageButton = document.getElementById('add-image-button');
+        const submitButton = document.getElementById('submit-button');
+        let imageCount = 0;
+
+        fileInput.addEventListener('change', function(event) {
+            const imageContainer = document.getElementById('image-container');
+            const files = event.target.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const imageBox = document.createElement('div');
+                imageBox.classList.add('image-box');
+
+                const image = document.createElement('img');
+                image.src = URL.createObjectURL(file);
+
+                imageBox.appendChild(image);
+                imageContainer.appendChild(imageBox);
+            }
+
+            // Tampilkan tombol "Tambah Gambar" setelah pengguna mengunggah foto pertama
+            if (imageContainer.children.length > 0) {
+                addImageButton.style.display = 'block';
+            }
+        });
+
+        addImageButton.addEventListener('click', function() {
+            fileInput.click();
+        });
+  </script>
+  
+  <script>
+  document.getElementById("closedCheckboxSenin").addEventListener("change", function () {
+    var jamBukaSeninInput = document.getElementById("jamBukaSenin");
+    var jamTutupSeninInput = document.getElementById("jamTutupSenin");
+    var hargaTiketSeninInput = document.getElementById("hargaTiketSenin");
+
+
+    if (this.checked) {
+      jamBukaSeninInput.readOnly = true;
+      jamTutupSeninInput.readOnly = true;
+      hargaTiketSeninInput.readOnly = true;
+      jamBukaSeninInput.value = "";
+      jamTutupSeninInput.value = "";
+      hargaTiketSeninInput.value="";
+    } else {
+      jamBukaSeninInput.readOnly = false;
+      jamTutupSeninInput.readOnly = false;
+      hargaTiketSeninInput.readOnly = false;
+    }
+  });
+  
+  document.getElementById("closedCheckboxSelasa").addEventListener("change", function () {
+	    var jamBukaSelasaInput = document.getElementById("jamBukaSelasa");
+	    var jamTutupSelasaInput = document.getElementById("jamTutupSelasa");
+	    var hargaTiketSelasaInput = document.getElementById("hargaTiketSelasa");
+
+	    if (this.checked) {
+	      jamBukaSelasaInput.readOnly = true;
+	      jamTutupSelasaInput.readOnly = true;
+	      hargaTiketSelasaInput.readOnly = true;
+	      hargaTiketSelasaInput.value = "";
+	      jamBukaSelasaInput.value = "";
+	      jamTutupSelasaInput.value = "";
+	    } else {
+	      jamBukaSelasaInput.readOnly = false;
+	      jamTutupSelasaInput.readOnly = false;
+	      hargaTiketSelasaInput.readOnly = false;
+	    }
+	  });
+  
+  document.getElementById("closedCheckboxRabu").addEventListener("change", function () {
+	    var jamBukaRabuInput = document.getElementById("jamBukaRabu");
+	    var jamTutupRabuInput = document.getElementById("jamTutupRabu");
+	    var hargaTiketRabuInput = document.getElementById("hargaTiketRabu");
+
+	    if (this.checked) {
+	      jamBukaRabuInput.readOnly = true;
+	      jamTutupRabuInput.readOnly = true;
+	      hargaTiketRabuInput.readOnly = true;
+	      hargaTiketRabuInput.value = "";
+	      jamBukaRabuInput.value = "";
+	      jamTutupRabuInput.value = "";
+	    } else {
+	      jamBukaRabuInput.readOnly = false;
+	      jamTutupRabuInput.readOnly = false;
+	      hargaTiketRabuInput.readOnly = false;
+	    }
+	  });
+  
+  document.getElementById("closedCheckboxKamis").addEventListener("change", function () {
+	    var jamBukaKamisInput = document.getElementById("jamBukaKamis");
+	    var jamTutupKamisInput = document.getElementById("jamTutupKamis");
+	    var hargaTiketKamisInput = document.getElementById("hargaTiketKamis");
+
+	    if (this.checked) {
+	      jamBukaKamisInput.readOnly = true;
+	      jamTutupKamisInput.readOnly = true;
+	      hargaTiketKamisInput.readOnly = true;
+	      hargaTiketKamisInput.value = "";
+	      jamBukaKamisInput.value = "";
+	      jamTutupKamisInput.value = "";
+	    } else {
+	      jamBukaKamisInput.readOnly = false;
+	      jamTutupKamisInput.readOnly = false;
+	      hargaTiketKamisInput.readOnly = false;
+	    }
+	  });
+  
+  document.getElementById("closedCheckboxJumat").addEventListener("change", function () {
+	    var jamBukaJumatInput = document.getElementById("jamBukaJumat");
+	    var jamTutupJumatInput = document.getElementById("jamTutupJumat");
+	    var hargaTiketJumatInput = document.getElementById("hargaTiketJumat");
+
+	    if (this.checked) {
+	      jamBukaJumatInput.readOnly = true;
+	      jamTutupJumatInput.readOnly = true;
+	      hargaTiketJumatInput.readOnly = true;
+	      hargaTiketJumatInput.value = "";
+	      jamBukaJumatInput.value = "";
+	      jamTutupJumatInput.value = "";
+	    } else {
+	      jamBukaJumatInput.readOnly = false;
+	      jamTutupJumatInput.readOnly = false;
+	      hargaTiketJumatInput.readOnly = false;
+	    }
+	  });
+  
+  document.getElementById("closedCheckboxSabtu").addEventListener("change", function () {
+	    var jamBukaSabtuInput = document.getElementById("jamBukaSabtu");
+	    var jamTutupSabtuInput = document.getElementById("jamTutupSabtu");
+	    var hargaTiketSabtuInput = document.getElementById("hargaTiketSabtu");
+
+	    if (this.checked) {
+	      jamBukaSabtuInput.readOnly = true;
+	      jamTutupSabtuInput.readOnly = true;
+	      hargaTiketSabtuInput.readOnly = true;
+	      hargaTiketSabtuInput.value = "";
+	      jamBukaSabtuInput.value = "";
+	      jamTutupSabtuInput.value = "";
+	    } else {
+	      jamBukaSabtuInput.readOnly = false;
+	      jamTutupSabtuInput.readOnly = false;
+	      hargaTiketSabtuInput.readOnly = false;
+	    }
+	  });
+  
+  document.getElementById("closedCheckboxMinggu").addEventListener("change", function () {
+	    var jamBukaMingguInput = document.getElementById("jamBukaMinggu");
+	    var jamTutupMingguInput = document.getElementById("jamTutupMinggu");
+	    var hargaTiketMingguInput = document.getElementById("hargaTiketMinggu");
+
+	    if (this.checked) {
+	      jamBukaMingguInput.readOnly = true;
+	      jamTutupMingguInput.readOnly = true;
+	      jamBukaMingguInput.value = "";
+	      jamTutupMingguInput.value = "";
+	      hargaTiketMingguInput.readOnly = true;
+	      hargaTiketMingguInput.value = "";
+	    } else {
+	      jamBukaMingguInput.readOnly = false;
+	      jamTutupMingguInput.readOnly = false;
+	      hargaTiketMingguInput.readOnly = false;
+	    }
+	  });
+</script>
+    <!-- End Script -->
+  </body>
+</html>

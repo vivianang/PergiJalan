@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Zay Shop - Product Detail Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="/userStyle/assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/userStyle/assets/img/favicon.ico">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/templatemo.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="/userStyle/assets/css/fontawesome.min.css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="/userStyle/assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="/userStyle/assets/css/slick-theme.css">
+
+<style>
+.aaa {
+}
+
+.card{
+	border:none;
+	background-color: #fff;
+}
+
+.form-color{
+  
+   background-color: red;
+
+}
+
+.form-control{
+
+	height: 48px;
+	border-radius: 25px;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #35b69f;
+    outline: 0;
+    box-shadow: none;
+    text-indent: 10px;
+}
+
+.c-badge{
+	background-color: #35b69f;
+    color: white;
+    height: 20px;
+    font-size: 11px;
+    width: 92px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.comment-text{
+	font-size: 13px;
+}
+
+.wish{
+
+	color:#35b69f;
+}
+
+
+.user-feed{
+
+	    font-size: 14px;
+	    margin-top: 12px;
+}
+
+.fa-star {
+margin-bottom: 16px;
+}
+.modal {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+    <nav th:replace="~{_header :: header}"></nav>
+
+
+	<!-- Open Content -->
+	<section class="bg-light">
+		<div class="container pb-5">
+			<div class="row">
+				<div class="col-lg-5 mt-5">
+					<div class="card mb-3" style="position: relative;">
+						<div th:if="${#lists.size(placePhoto) == 0}">
+							<img class="card-img img-fluid" src="/userStyle/assets/img/noimage.jpg" alt="Card image cap" id="product-detail">
+						</div>
+						<div th:if="${#lists.size(placePhoto) > 0}">
+							<img class="aaa card-img img-fluid"
+								th:src="${placePhoto[0].photoPath} + '/' + ${placePhoto[0].photoName}"
+								alt="Card image cap" id="product-detail">
+							<a th:href="@{'/user/gallery-photo/' + ${ids}}" style="position: absolute; bottom: 0; right: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">More Photo</a>
+						</div>
+						<!--  <div class="card mb-3">
+							<button type="submit" value="tulis_ulasan" name="tulis_ulasan" class="btn btn-success btn-lg">More Photo</button>
+						</div>	-->
+					</div>
+					
+				</div>
+				
+				 
+				
+				<!-- col end -->
+				<div class="col-lg-7 mt-5">
+					<div class="card">
+						<div class="card-body" th:object="${place}">
+							<h1 class="h2" th:text="*{name}"></h1>
+							
+							
+							
+							<div class="d-flex align-items-center" th:each="row: ${countStar}">
+		                  		<p  th:text="${'Rating Kebersihan | ' + row[1]}"></p>
+		                  		<i th:each="starNumber : ${#numbers.sequence(1,5)}"
+		              				th:class="${ row[1] >= starNumber} ? 'fa fa-star text-warning' : 'fa fa-star text-secondary'">
+		              			</i>
+		                </div>
+		                <div class="d-flex flex-row align-items-center" th:each="row: ${countStar}" >
+		                  		<p th:text="${'Rating Suasana | ' + row[2]}"></p>
+		              			<i th:each="starNumber : ${#numbers.sequence(1,5)}"
+		              				th:class="${ row[2] >= starNumber} ? 'fa fa-star text-warning' : 'fa fa-star text-secondary'">
+		              			</i>
+		                </div>
+		                <div class="d-flex flex-row align-items-center" th:each="row: ${countStar}">
+		                 		<p  th:text="${'Rating Pelayanan | ' + row[3]}"></p>
+		              		<i th:each="starNumber : ${#numbers.sequence(1,5)}"
+		              				th:class="${ row[3] >= starNumber} ? 'fa fa-star text-warning' : 'fa fa-star text-secondary'">
+		              			</i>
+		                </div>
+		                
+		                
+							<p>
+								<span class="list-inline-item text-dark" th:each="row: ${countStar}" th:text="${'Total: ' + row[0] + ' Comments'}" >Rating 4.8 | 36 Comments</span>
+							</p>
+							<p th:text=*{description}></p>
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<h6>Website:</h6>
+								</li>
+								<li class="list-inline-item">
+									<a th:href="*{website}">Click Here</a>
+								</li>
+							</ul>
+
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<h6>Address:</h6>
+								</li>
+								<li class="list-inline-item">
+									<p th:text=*{address}></p>
+								</li>
+							</ul>
+							<h6>Jam Buka:</h6>
+							<ul class="list-unstyled pb-3">
+								<li th:each="data : ${openHour}"
+									th:text="${data.day} + ': ' + ${data.openHour} + ' - ' + ${data.closedHour}"></li>
+							</ul>
+
+							<h6>Harga Tiket:</h6>
+							<ul class="list-unstyled pb-3">
+								<li th:each="data : ${ticketPrice}"
+									th:text="${data.day} + ': Rp. ' + ${data.ticketPrice}"></li>
+
+							</ul>
+
+						<form th:object="${place}" th:action="@{/user/attraction-action}"
+								enctype="multipart/form-data" id="contact-form"
+								class="col-md-12 m-auto" method="POST" role="form">
+								<div class="row pb-3">
+									<input type="hidden" id="inputName" placeholder="Name"
+										th:field="*{id}">
+									<div class="col d-grid">
+										<button type="submit" value="tulis_ulasan" name="tulis_ulasan"
+											class="btn btn-success btn-lg">Tulis Ulasan</button>
+									</div>
+									<div class="col d-grid">
+										<button type="submit" value="edit_informasi"
+											name="edit_informasi" class="btn btn-success btn-lg">Edit Tempat Wisata</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Close Content -->
+
+
+	<!-- Start Comment -->
+	<section class="py-3">
+        <div class="container">
+	    <div class="col-md-12">
+	      <div class="card">
+	        <div class="p-3">
+	          <h5>Ulasan</h5>
+	        </div>
+	        
+	        <div class="mt-1" th:each="placeReview,rowStat : ${placeReview}">
+	          <div class="d-flex flex-row p-3">
+	            <i class="rounded-circle mr-3 fa fa-user"></i>
+	            <div class="w-100">
+	              <div class="d-flex justify-content-between align-items-center">
+	                <div class="d-flex flex-row align-items-center">
+	                  <h5 th:text=${placeReview[5]}></h5>
+	                </div>
+	                <small th:text=${placeReview[7]}></small>
+	              </div>
+		              	<div class="d-flex align-items-center">
+		                  <p>Rating Kebersihan:</p>
+		                  	<i th:each="starNumber : ${#numbers.sequence(1,5)}"
+		              		th:class="${ placeReview[2] >= starNumber} ? 'fa fa-star text-warning' : 'fa fa-star text-secondary'">
+		              		</i>
+		                </div>
+		                <div class="d-flex flex-row align-items-center">
+		                  <p>Rating Suasana: </p>
+		              		<i th:each="starNumber : ${#numbers.sequence(1,5)}"
+		              		th:class="${ placeReview[3] >= starNumber} ? 'fa fa-star text-warning' : 'fa fa-star text-secondary'">
+		              		</i> 
+		                </div>
+		                <div class="d-flex flex-row align-items-center">
+		                  <p>Rating Pelayanan:</p>
+		              		<i th:each="starNumber : ${#numbers.sequence(1,5)}"
+		              		th:class="${ placeReview[4] >= starNumber} ? 'fa fa-star text-warning' : 'fa fa-star text-secondary'">
+		              		</i>
+		                </div>
+	              <h5 class="text-justify" th:text=${placeReview[0]}></h5>
+	              <p class="text-justify comment-text mb-0" th:text=${placeReview[1]}></p>
+	              					<div class="gallery">
+	              					
+											<div th:if="${#lists.size(placeReviewPhoto) > 0}">
+												<img  th:each="data : ${placeReviewPhoto}" th:if="${placeReview[8]==data.placeReviewId.id }" 
+													th:src="${data.photoPath} + '/' + ${data.photoName}" alt=""
+													id="product-detail">
+											</div>
+											<!-- Add more images as needed -->
+										</div>
+	            </div>
+	          </div>
+	        </div>
+				        <div div="row">
+			                    <ul class="pagination pagination-lg justify-content-end" >
+			                    
+			                        <li class="page-item" th:each="i : ${#numbers.sequence(1,placeReview.totalPages)}">
+			                            <a th:if="${placeReview.totalPages >0 }" th:class="${currentPage == i ? 'page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0' : 'page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0'}" th:href="@{'/user/attraction-detail/' + ${ids} + '?page=' + ${i}}" tabindex="-1" th:text="${i}">1</a>
+			                        </li>
+			                    </ul>
+			                </div>
+	      </div>
+	    </div>
+	     
+	  </div>
+	<!-- End Comment -->
+	 </section>
+
+	<nav th:replace="~{_footer :: footer}"></nav>
+				<div th:if="${reviewMessage}">
+
+					<!-- The Modal -->
+					<div id="myModal" class="modal">
+					  <!-- Modal content -->
+					  <div class="modal-content">
+					    <span class="close" onclick="closeModal()">&times;</span>
+					    <p th:text="*{reviewMessage}"></p>
+					  </div>
+					</div>
+                  </div>
+                  <div th:if="${editAttractionMessage}">
+
+					<!-- The Modal -->
+					<div id="myModal" class="modal">
+					  <!-- Modal content -->
+					  <div class="modal-content">
+					    <span class="close" onclick="closeModal()">&times;</span>
+					    <p th:text="*{editAttractionMessage}"></p>
+					  </div>
+					</div>
+                  </div>
+				
+    <!-- Start Script -->
+    <script src="/userStyle/assets/js/jquery-1.11.0.min.js"></script>
+    <script src="/userStyle/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/userStyle/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/userStyle/assets/js/templatemo.js"></script>
+    <script src="/userStyle/assets/js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
+<script>
+//Get the modal element
+var modal = document.getElementById("myModal");
+
+modal.style.display = "block";
+
+// Set timeout to close the modal after 10 seconds
+setTimeout(function() {
+    closeModal();
+}, 5000);
+
+// Function to close the modal
+function closeModal() {
+    modal.style.display = "none";
+}
+
+// Close the modal if the user clicks outside of it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
+</script>
+</body>
+
+</html>

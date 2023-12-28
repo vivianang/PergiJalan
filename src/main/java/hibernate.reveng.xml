@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="TBL_USER" match-schema="HR"></table-filter>
+	<table-filter match-name="TBL_USER_ROLE" match-schema="skripsi"></table-filter>
+	<table-filter match-name="TBL_USER_DETAIL" match-schema="skripsi"></table-filter>
+</hibernate-reverse-engineering>

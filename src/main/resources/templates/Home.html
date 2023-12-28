@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/userStyle/assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="/userStyle/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/templatemo.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="/userStyle/assets/css/fontawesome.min.css">
+
+<style>
+.test {
+ text-align:right
+}
+
+.explore-more {
+	margin-top: 13px;
+ 	text-align:right
+}
+
+.modal {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.abcde {
+	width: 305px;
+	height:300px;
+}
+</style>
+
+</head>
+
+<body>
+	<nav th:replace="~{_header :: header}"></nav>
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="/userStyle/assets/img/dufan1.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success">Selamat Datang di PergiJalan</h1>
+                                <p>
+                                    Portal untuk Menemukan dan Membagikan Pengalaman Wisata Anda! Temukan keindahan tempat-tempat wisata terbaik, berikan rating untuk kebersihan, suasana, 
+                                    dan pelayanan. Mulailah petualangan Anda sekarang!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            
+        </div>
+    </div>
+    <!-- End Banner Hero -->
+
+
+   
+
+
+    <!-- Start Featured Product -->
+	<section class="bg-light">
+        <div class="container py-2">
+            <div class="row py-3">
+                <div class="col-lg-6">
+                    <h1 class="h1"><b>Baru ditambahkan</b></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-3 mb-4" th:each="newPlace : ${newPlace}">
+                    <div class="card h-100">
+
+                    	<a th:if="${newPlace[3] == null}" th:href="@{'/user/attraction-detail/' + ${newPlace[0]}}">
+                            <img src="/userStyle/assets/img/noimage.jpg" class="abcde card-img-top" alt="...">
+                        </a>
+                    	
+                        <a th:if="${newPlace[3] != null}" th:href="@{'/user/attraction-detail/' + ${newPlace[0]}}">
+                            <img th:src="${newPlace[3]} + '/' + ${newPlace[2]}" class="abcde card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <a th:href="@{'/user/attraction-detail/' + ${newPlace[0]}}" class="h3 text-decoration-none text-dark"><b th:text="${newPlace[1]}">Grand Indonesia</b></a>
+                            <p class="text-muted">Jakarta Pusat</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Featured Product -->
+    
+    
+    
+    
+     <!-- Start Featured Product -->
+	<section class="bg-white">
+        <div class="container py-2">
+            <div class="row py-3">
+                <div class="col-lg-6">
+                    <h1 class="h1"><b>Taman Hiburan</b></h1>
+                </div>
+                <div class="col-lg-6 ">
+                    <p class="explore-more"><a href="/user/explore-more/1" class="btn btn-success">Explore More</a></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-3 mb-4" th:each="tamanHiburanPlace : ${tamanHiburanPlace}">
+                    <div class="card h-100">
+
+                    	<a th:if="${tamanHiburanPlace[3] == null}" th:href="@{'/user/attraction-detail/' + ${tamanHiburanPlace[0]}}">
+                            <img src="/userStyle/assets/img/noimage.jpg" class="abcde card-img-top" alt="...">
+                        </a>
+                    	
+                        <a th:if="${tamanHiburanPlace[3] != null}" th:href="@{'/user/attraction-detail/' + ${tamanHiburanPlace[0]}}">
+                            <img th:src="${tamanHiburanPlace[3]} + '/' + ${tamanHiburanPlace[2]}" class="abcde card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <a th:href="@{'/user/attraction-detail/' + ${tamanHiburanPlace[0]}}" class="h3 text-decoration-none text-dark"><b th:text="${tamanHiburanPlace[1]}">Grand Indonesia</b></a>
+                            <p class="text-muted">Jakarta Pusat</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Featured Product -->
+    
+	<nav th:replace="~{_footer :: footer}"></nav>
+				<div th:if="${addAttractionMessage}">
+
+					<!-- The Modal -->
+					<div id="myModal" class="modal">
+					  <!-- Modal content -->
+					  <div class="modal-content">
+					    <span class="close" onclick="closeModal()">&times;</span>
+					    <p th:text="*{addAttractionMessage}"></p>
+					  </div>
+					</div>
+                  </div>
+    <!-- Start Script -->
+    <script src="/userStyle/assets/js/jquery-1.11.0.min.js"></script>
+    <script src="/userStyle/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/userStyle/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/userStyle/assets/js/templatemo.js"></script>
+    <script src="/userStyle/assets/js/custom.js"></script>
+    <!-- End Script -->
+    <script>
+		//Get the modal element
+		var modal = document.getElementById("myModal");
+		
+		modal.style.display = "block";
+		
+		// Set timeout to close the modal after 10 seconds
+		setTimeout(function() {
+		    closeModal();
+		}, 5000);
+		
+		// Function to close the modal
+		function closeModal() {
+		    modal.style.display = "none";
+		}
+		
+		// Close the modal if the user clicks outside of it
+		window.onclick = function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		};
+		
+	</script>
+</body>
+
+</html>

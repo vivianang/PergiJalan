@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Spica Admin</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/adminStyle/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/adminStyle/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/adminStyle/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/adminStyle/images/favicon.png" />
+  
+   <style>
+        #fullpage {
+            display: none;
+            position: absolute;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 75vw;
+            height: 75vh;
+            background-size: contain;
+            background-repeat: no-repeat no-repeat;
+            background-position: center center;
+            background-color: black;
+            cursor: pointer;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .gallery img {
+            max-width: 100px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    
+    .thumbnail {
+    width: 100px; /* Sesuaikan ukuran gambar kecil */
+    height: 100px; /* Sesuaikan ukuran gambar kecil */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    bottom: 20px; /* Sesuaikan posisi gambar kecil dari bawah */
+    left: calc(50% - 50px); /* Menengahkan gambar kecil horizontal */
+    border: 2px solid white; /* Tambahkan border untuk estetika */
+}
+    
+    </style>
+  
+</head>
+
+<body>
+  <div class="container-scroller d-flex">
+
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" th:insert="admin/_menu :: menu"></nav>
+
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <div class="navbar-brand-wrapper">
+            <a class="navbar-brand brand-logo" href="../../index.html"><img src="/adminStyle/images/logo.svg" alt="logo"/></a>
+            <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo"/></a>
+          </div>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, Brandon Haynes</h4>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item">
+              <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
+            </li>
+            <li class="nav-item dropdown mr-1">
+              <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+                <i class="mdi mdi-calendar mx-0"></i>
+                <span class="count bg-info">2</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                      <img src="/adminStyle/images/faces/face4.jpg" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content flex-grow">
+                    <h6 class="preview-subject ellipsis font-weight-normal">David Grey
+                    </h6>
+                    <p class="font-weight-light small-text text-muted mb-0">
+                      The meeting is cancelled
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                      <img src="../../images/faces/face2.jpg" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content flex-grow">
+                    <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
+                    </h6>
+                    <p class="font-weight-light small-text text-muted mb-0">
+                      New product launch
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                      <img src="../../images/faces/face3.jpg" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content flex-grow">
+                    <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
+                    </h6>
+                    <p class="font-weight-light small-text text-muted mb-0">
+                      Upcoming board meeting
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown mr-2">
+              <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+                <i class="mdi mdi-email-open mx-0"></i>
+                <span class="count bg-danger">1</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="mdi mdi-information mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      Just now
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-warning">
+                      <i class="mdi mdi-settings mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      Private message
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-info">
+                      <i class="mdi mdi-account-box mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      2 days ago
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+			<!-- partial -->
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="row">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<form class="forms-sample" th:object="${placeTxn}" th:action="@{/admin/pending-attraction-detail/approve}" method="POST">
+										<input type="hidden" id="inputName" placeholder="Name" th:field="*{id}">
+										<div th:if="${placeTxn.actionType == 1}">
+											
+											<h2 th:text="*{name}"></h2>
+											<br />
+											<h4>Description</h4>
+											<p th:text=${placeTxn.description}></p>
+											<br />
+											<h4>Website</h4>
+											<p th:text=${placeTxn.website}></p>
+											<br />
+											<h4>Address</h4>
+											<p th:text=${placeTxn.address}></p>
+											<br />
+	
+	
+											<h4>Jam Buka</h4>
+											<p th:each="data : ${openHourTxn}"
+												th:text="${data.day} + ': ' + ${data.openHour} + ' - ' + ${data.closedHour}"></p>
+											<br />
+	
+											<h4>Harga Tiket</h4>
+											<p th:each="data : ${ticketPriceTxn}"
+												th:text="${data.day} + ': Rp.' + ${data.ticketPrice}"></p>
+											<br />
+	
+											<h4>Galeri Foto</h4>
+											<div class="gallery">
+												<div th:if="${#lists.size(placePhotoTxn) > 0}">
+													<img th:each="data : ${placePhotoTxn}"
+														th:src="${data.photoPath} + '/' + ${data.photoName}" alt=""
+														id="product-detail">
+												</div>
+												<!-- Add more images as needed -->
+											</div>
+											
+											<h4>Attraction added By</h4>
+											<p th:text="${placeTxn.user.username}"></p>
+											<br />
+											<h4>Attraction added Date</h4>
+											<p th:text="${placeTxn.insertDt}"></p>
+											<br />
+	
+											<div id="fullpage" onclick="showAllImages();"></div>
+										</div>
+
+										<div th:if="${placeTxn.actionType == 2}">
+											<table class="table table-striped">
+						                      <thead>
+						                        <tr>
+						                          <th></th>
+						                          <th>Before</th>
+						                          <th>After</th>
+						                        </tr>
+						                      </thead>
+						                      <tbody>
+						                        <tr>
+						                          <td>Nama</td>
+						                          <td th:text="${place.name}"></td>
+						                          <td th:text="${placeTxn.name}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td>Description</td>
+						                          <td th:text="${place.description}"></td>
+						                          <td th:text="${placeTxn.description}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td>Website</td>
+						                          <td th:text="${place.website}"></td>
+						                          <td th:text="${placeTxn.website}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td>Address</td>
+						                          <td th:text="${place.address}"></td>
+						                          <td th:text="${placeTxn.address}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td rowspan="7">Jam Buka</td>
+						                          <td th:if="${openHour[0].isClosed == 0}" th:text="${openHour[0].day + ': ' + openHour[0].openHour + ' - ' + openHour[0].closedHour}"></td>
+						                          <td th:if="${openHour[0].isClosed == 1}" th:text="${openHour[0].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[0].isClosed == 0}" th:text="${openHourTxn[0].day + ': ' + openHourTxn[0].openHour + ' - ' + openHourTxn[0].closedHour}"></td>
+						                          <td th:if="${openHourTxn[0].isClosed == 1}" th:text="${openHourTxn[0].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[1].isClosed == 0}" th:text="${openHour[1].day + ': ' + openHour[1].openHour + ' - ' + openHour[1].closedHour}"></td>
+						                          <td th:if="${openHour[1].isClosed == 1}" th:text="${openHour[1].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[1].isClosed == 0}" th:text="${openHourTxn[1].day + ': ' + openHourTxn[1].openHour + ' - ' + openHourTxn[1].closedHour}"></td>
+						                          <td th:if="${openHourTxn[1].isClosed == 1}" th:text="${openHourTxn[1].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[2].isClosed == 0}" th:text="${openHour[2].day + ': ' + openHour[2].openHour + ' - ' + openHour[2].closedHour}"></td>
+						                          <td th:if="${openHour[2].isClosed == 1}" th:text="${openHour[2].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[2].isClosed == 0}" th:text="${openHourTxn[2].day + ': ' + openHourTxn[2].openHour + ' - ' + openHourTxn[2].closedHour}"></td>
+						                          <td th:if="${openHourTxn[2].isClosed == 1}" th:text="${openHourTxn[2].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[3].isClosed == 0}" th:text="${openHour[3].day + ': ' + openHour[3].openHour + ' - ' + openHour[3].closedHour}"></td>
+						                          <td th:if="${openHour[3].isClosed == 1}" th:text="${openHour[3].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[3].isClosed == 0}" th:text="${openHourTxn[3].day + ': ' + openHourTxn[3].openHour + ' - ' + openHourTxn[3].closedHour}"></td>
+						                          <td th:if="${openHourTxn[3].isClosed == 1}" th:text="${openHourTxn[3].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[4].isClosed == 0}" th:text="${openHour[4].day + ': ' + openHour[4].openHour + ' - ' + openHour[4].closedHour}"></td>
+						                          <td th:if="${openHour[4].isClosed == 1}" th:text="${openHour[4].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[4].isClosed == 0}" th:text="${openHourTxn[4].day + ': ' + openHourTxn[4].openHour + ' - ' + openHourTxn[4].closedHour}"></td>
+						                          <td th:if="${openHourTxn[4].isClosed == 1}" th:text="${openHourTxn[4].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[5].isClosed == 0}" th:text="${openHour[5].day + ': ' + openHour[5].openHour + ' - ' + openHour[5].closedHour}"></td>
+						                          <td th:if="${openHour[5].isClosed == 1}" th:text="${openHour[5].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[5].isClosed == 0}" th:text="${openHourTxn[5].day + ': ' + openHourTxn[5].openHour + ' - ' + openHourTxn[5].closedHour}"></td>
+						                          <td th:if="${openHourTxn[5].isClosed == 1}" th:text="${openHourTxn[5].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[6].isClosed == 0}" th:text="${openHour[6].day + ': ' + openHour[6].openHour + ' - ' + openHour[6].closedHour}"></td>
+						                          <td th:if="${openHour[6].isClosed == 1}" th:text="${openHour[6].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[6].isClosed == 0}" th:text="${openHourTxn[6].day + ': ' + openHourTxn[6].openHour + ' - ' + openHourTxn[6].closedHour}"></td>
+						                          <td th:if="${openHourTxn[6].isClosed == 1}" th:text="${openHourTxn[6].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td rowspan="7">Harga Tiket</td>
+						                          <td th:if="${openHour[0].isClosed == 0}" th:text="${ticketPrice[0].day + ': ' + ticketPrice[0].ticketPrice}"></td>
+						                          <td th:if="${openHour[0].isClosed == 1}" th:text="${openHour[0].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[0].isClosed == 0}" th:text="${ticketPriceTxn[0].day + ': ' + ticketPriceTxn[0].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[0].isClosed == 1}" th:text="${openHourTxn[0].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[1].isClosed == 0}" th:text="${ticketPrice[1].day + ': ' + ticketPrice[1].ticketPrice}"></td>
+						                          <td th:if="${openHour[1].isClosed == 1}" th:text="${openHour[1].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[1].isClosed == 0}" th:text="${ticketPriceTxn[1].day + ': ' + ticketPriceTxn[1].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[1].isClosed == 1}" th:text="${openHourTxn[1].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[2].isClosed == 0}" th:text="${ticketPrice[2].day + ': ' + ticketPrice[2].ticketPrice}"></td>
+						                          <td th:if="${openHour[2].isClosed == 1}" th:text="${openHour[2].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[2].isClosed == 0}" th:text="${ticketPriceTxn[2].day + ': ' + ticketPriceTxn[2].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[2].isClosed == 1}" th:text="${openHourTxn[2].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[3].isClosed == 0}" th:text="${ticketPrice[3].day + ': ' + ticketPrice[3].ticketPrice}"></td>
+						                          <td th:if="${openHour[3].isClosed == 1}" th:text="${openHour[3].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[3].isClosed == 0}" th:text="${ticketPriceTxn[3].day + ': ' + ticketPriceTxn[3].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[3].isClosed == 1}" th:text="${openHourTxn[3].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[4].isClosed == 0}" th:text="${ticketPrice[4].day + ': ' + ticketPrice[4].ticketPrice}"></td>
+						                          <td th:if="${openHour[4].isClosed == 1}" th:text="${openHour[4].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[4].isClosed == 0}" th:text="${ticketPriceTxn[4].day + ': ' + ticketPriceTxn[4].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[4].isClosed == 1}" th:text="${openHourTxn[4].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[5].isClosed == 0}" th:text="${ticketPrice[5].day + ': ' + ticketPrice[5].ticketPrice}"></td>
+						                          <td th:if="${openHour[5].isClosed == 1}" th:text="${openHour[5].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[5].isClosed == 0}" th:text="${ticketPriceTxn[5].day + ': ' + ticketPriceTxn[5].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[5].isClosed == 1}" th:text="${openHourTxn[5].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td th:if="${openHour[6].isClosed == 0}" th:text="${ticketPrice[6].day + ': ' + ticketPrice[6].ticketPrice}"></td>
+						                          <td th:if="${openHour[6].isClosed == 1}" th:text="${openHour[6].day + ': tutup'}"></td>
+						                          <td th:if="${openHourTxn[6].isClosed == 0}" th:text="${ticketPriceTxn[6].day + ': ' + ticketPriceTxn[6].ticketPrice}"></td>
+						                          <td th:if="${openHourTxn[6].isClosed == 1}" th:text="${openHourTxn[6].day + ': tutup'}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td>Attraction added by</td>
+						                          <td></td>
+						                          <td th:text="${placeTxn.user.username}"></td>
+						                        </tr>
+						                        <tr>
+						                          <td>Attraction added date</td>
+						                          <td></td>
+						                          <td th:text="${placeTxn.insertDt}"></td>
+						                        </tr>
+						                      </tbody>
+						                    </table>
+										</div>
+
+
+										<button type="submit" value="approve_button" name="approve_button" class="btn btn-primary">Approve</button>
+										<button type="submit" value="reject_button" name="reject_button" class="btn btn-primary">Reject</button>
+										<a class="btn btn-light" th:href="@{'/admin/pending-attraction-list'}">Back</a>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <nav th:replace="~{_footer :: footer}"></nav>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- base:js -->
+  <script src="/adminStyle/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="/adminStyle/js/off-canvas.js"></script>
+  <script src="/adminStyle/js/hoverable-collapse.js"></script>
+  <script src="/adminStyle/js/template.js"></script>
+  <!-- endinject -->
+  <!-- End custom js for this page-->
+  
+  <script>
+        $(function() {
+            $('#example1').DataTable()
+            $('#example2').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
+        })
+
+        function myFunction(id) {
+            var txt;
+            var r = confirm("Are you sure? \n Press ok to delete \n Press cancel to cancel");
+            if (r == true) {
+                window.location.href = "http://localhost:8011/admin/delete-category/" + id;
+            } else {
+                txt = "";
+            }
+            document.getElementById("demo").innerHTML = txt;
+        }
+    </script>
+    
+    <script>
+    const imgs = document.querySelectorAll('.gallery img');
+    const fullPage = document.querySelector('#fullpage');
+    let currentIndex = 0;
+    let slideshowInterval;
+    let prevIndex, nextIndex;
+
+    function showImage(index) {
+        if (index >= 0 && index < imgs.length) {
+            fullPage.style.backgroundImage = 'url(' + imgs[index].src + ')';
+            currentIndex = index;
+
+
+            // Mengatur indeks gambar sebelum dan sesudahnya
+            prevIndex = (index - 1 + imgs.length) % imgs.length;
+            nextIndex = (index + 1) % imgs.length;
+        }
+    }
+
+    function showAllImages() {
+        // Show all images by setting the background of fullPage to a CSS gradient
+        fullPage.style.backgroundImage = 'linear-gradient(90deg, rgba(255,255,255,0) 50%, rgba(255,255,255,0.5) 50%)';
+    }
+
+
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % imgs.length;
+        showImage(currentIndex);
+    }
+
+   function prevImage() {
+    currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
+    showImage(currentIndex);
+}
+
+    imgs.forEach((img, index) => {
+        img.addEventListener('click', function() {
+            showImage(index);
+            fullPage.style.display = 'block';
+            startSlideshow();
+        });
+    });
+
+    fullPage.addEventListener('click', function() {
+        fullPage.style.display = 'none';
+        stopSlideshow();
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowRight') {
+            nextImage();
+        } else if (event.key === 'ArrowLeft') { // Menambahkan navigasi ke gambar sebelumnya
+        prevImage();
+    } else if (event.key === 'Escape') {
+        fullPage.style.display = 'none';
+        stopSlideshow();
+    }
+    });
+
+    function preloadNextImage() {
+        const nextIndex = (currentIndex + 1) % imgs.length;
+        const nextImageObj = new Image();
+        nextImageObj.src = imgs[nextIndex].src;
+    }
+
+    fullPage.addEventListener('load', preloadNextImage);
+</script>
+</body>
+
+</html>

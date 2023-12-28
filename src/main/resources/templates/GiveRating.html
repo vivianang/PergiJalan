@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zay Shop - Product Detail Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="/userStyle/assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/templatemo.css">
+    <link rel="stylesheet" href="/userStyle/assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="/userStyle/assets/css/fontawesome.min.css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="/userStyle/assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="/userStyle/assets/css/slick-theme.css">
+
+<style>
+
+
+.radio-input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-label {
+  cursor: pointer;
+  font-size: 0;
+  color: rgba(0,0,0,0.2);
+  transition: color 0.1s ease-in-out;
+}
+
+
+.radio-label:before {
+  content: "\f005";
+  font-size: 30px;
+}
+
+.radio-input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-label {
+  cursor: pointer;
+  font-size: 0;
+  color: rgba(0,0,0,0.2);
+  transition: color 0.1s ease-in-out;
+}
+
+.radio-label:before {
+  content: "★";
+  display: inline-block;
+  font-size: 32px;
+}
+
+.radio-input:checked ~ .radio-label {
+  color: #ffc700;
+  color: gold;
+}
+
+.radio-label:hover,
+.radio-label:hover ~ .radio-label {
+  color: goldenrod;
+}
+
+.radio-input:checked + .radio-label:hover,
+.radio-input:checked + .radio-label:hover ~ .radio-label,
+.radio-input:checked ~ .radio-label:hover,
+.radio-input:checked ~ .radio-label:hover ~ .radio-label,
+.radio-label:hover ~ .radio-input:checked ~ .radio-label {
+  color: darkgoldenrod;
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.rate {
+    display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+
+.card{
+	background-color: #fff;
+	border: none;
+}
+
+.form-color{
+	background-color: #fafafa;
+}
+
+.form-control{
+	border-radius: 25px;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #35b69f;
+    outline: 0;
+    box-shadow: none;
+    text-indent: 10px;
+}
+
+
+.image-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+.image-box {
+	width: 150px;
+	height: 150px;
+	margin: 10px;
+	border: 1px solid #ccc;
+	overflow: hidden;
+}
+.image-box img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+        
+</style>
+</head>
+
+<body>
+
+    <nav th:replace="~{_header :: header}"></nav>
+
+    <!-- Open Content -->
+    <section class="bg-light">
+      <div class="container pb-5">
+        <div class="row">
+        
+            
+          <div class="col-lg-5 mt-5">
+          <form th:action="@{/user/tulis-ulasan}" th:object="${place}"  enctype="multipart/form-data" id="contact-form" class="col-md-12 m-auto" method="POST" role="form">
+          <input type="hidden" th:field="*{id}"/>
+           <input type="hidden" th:field="*{name}"/>
+          	<h3 th:text="*{name}"></h3>
+            <div class="card mb-3">
+              <img class="card-img img-fluid" src="/userStyle/assets/img/dufan1.jpg" alt="Card image cap" id="product-detail">
+            </div>
+          </div>
+          <!-- col end -->
+          <div class="col-lg-7 mt-5">
+            <div class="card">
+              <div class="card-body">
+
+                <div class="container py-1">
+      			<div class="row py-1">
+
+
+                 <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <h6>Nilai Kebersihan :</h6>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="rate">
+                    <input class="radio-input" type="radio" id="kebersihanStar5" name="rateKebersihan" value="5" />
+						<label class="radio-label" for="kebersihanStar5" title="text"></label>
+						<input class="radio-input" type="radio" id="kebersihanStar4" name="rateKebersihan" value="4" />
+						<label class="radio-label" for="kebersihanStar4" title="text"></label>
+						<input class="radio-input" type="radio" id="kebersihanStar3" name="rateKebersihan" value="3" />
+						<label class="radio-label" for="kebersihanStar3" title="text"></label>
+						<input class="radio-input" type="radio" id="kebersihanStar2" name="rateKebersihan" value="2" />
+						<label class="radio-label" for="kebersihanStar2" title="text"></label>
+                    	<input class="radio-input" type="radio" id="kebersihanStar1" name="rateKebersihan" value="1" />
+						<label class="radio-label" for="kebersihanStar1" title="text"></label>
+					</div>
+                  </li>
+                </ul>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <h6>Nilai Suasana :</h6>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="rate">
+						<input class="radio-input" type="radio" id="suasanaStar5" name="rateSuasana" value="5" />
+						<label class="radio-label" for="suasanaStar5" title="text"></label>
+						<input class="radio-input" type="radio" id="suasanaStar4" name="rateSuasana" value="4" />
+						<label class="radio-label" for="suasanaStar4" title="text"></label>
+						<input class="radio-input" type="radio" id="suasanaStar3" name="rateSuasana" value="3" />
+						<label class="radio-label" for="suasanaStar3" title="text"></label>
+						<input class="radio-input" type="radio" id="suasanaStar2" name="rateSuasana" value="2" />
+						<label class="radio-label" for="suasanaStar2" title="text"></label>
+                    	<input class="radio-input" type="radio" id="suasanaStar1" name="rateSuasana" value="1" />
+						<label class="radio-label" for="suasanaStar1" title="text"></label>
+					</div>
+                  </li>
+                </ul>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <h6>Nilai Pelayanan :</h6>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="rate">
+						<input class="radio-input" type="radio" id="pelayananStar5" name="ratePelayanan" value="5" />
+						<label class="radio-label" for="pelayananStar5" title="text"></label>
+						<input class="radio-input" type="radio" id="pelayananStar4" name="ratePelayanan" value="4" />
+						<label class="radio-label" for="pelayananStar4" title="text"></label>
+						<input class="radio-input" type="radio" id="pelayananStar3" name="ratePelayanan" value="3" />
+						<label class="radio-label" for="pelayananStar3" title="text"></label>
+						<input class="radio-input" type="radio" id="pelayananStar2" name="ratePelayanan" value="2" />
+						<label class="radio-label" for="pelayananStar2" title="text"></label>
+                    	<input class="radio-input" type="radio" id="pelayananStar1" name="ratePelayanan" value="1" />
+						<label class="radio-label" for="pelayananStar1" title="text"></label>
+					</div>
+                  </li>
+                </ul>
+                
+                
+                	<div class="mb-3">
+	            		<h6>Judul Ulasan</h6>
+	            		<input type="text" class="form-control mt-1" id="attraction" autocomplete="on" th:object="${placeReviewTxn}" th:field="*{title}">
+         			</div>
+                
+                	<div class="mb-3">
+	            		<h6>Tulis Ulasan</h6>
+	            		<textarea id="message"  name="description" class="form-control mt-1" rows="8" th:object="${placeReviewTxn}" th:field="*{review}"></textarea>
+          			</div>
+          			
+          			<br>
+				          <b>Upload Foto: </b>
+				          <input name="files" type="file" id="file-input" accept="image/*" multiple>
+				                 
+				          <div class="image-container" id="image-container"></div>
+                  
+                <br>
+                  <div class="row pb-3">
+                    <div class="col d-grid">
+                      <button type="submit" class="btn btn-success btn-lg" name="submit" value="Submit">Submit</button>
+                    </div>
+                    <div class="col d-grid">
+                    
+                    
+                    <a  class="btn btn-light" th:href="@{'/user/attraction-detail/'+${id}}">Cancel</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        </div>
+      </div>
+    </section>
+    <!-- Close Content -->
+
+
+	<nav th:replace="~{_footer :: footer}"></nav>
+
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
+<script>
+const starRatingForm = document.querySelector(".star-rating");
+
+const handleFormChange = e => {
+  console.log(e.target.value);
+  return e.target.value;
+};
+
+starRatingForm.addEventListener("change", handleFormChange);
+</script>
+
+  <script>
+        const fileInput = document.getElementById('file-input');
+        const addImageButton = document.getElementById('add-image-button');
+        const submitButton = document.getElementById('submit-button');
+        let imageCount = 0;
+
+        fileInput.addEventListener('change', function(event) {
+            const imageContainer = document.getElementById('image-container');
+            const files = event.target.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const imageBox = document.createElement('div');
+                imageBox.classList.add('image-box');
+
+                const image = document.createElement('img');
+                image.src = URL.createObjectURL(file);
+
+                imageBox.appendChild(image);
+                imageContainer.appendChild(imageBox);
+            }
+
+            // Tampilkan tombol "Tambah Gambar" setelah pengguna mengunggah foto pertama
+            if (imageContainer.children.length > 0) {
+                addImageButton.style.display = 'block';
+            }
+        });
+
+        addImageButton.addEventListener('click', function() {
+            fileInput.click();
+        });
+  </script>
+
+</body>
+
+</html>
