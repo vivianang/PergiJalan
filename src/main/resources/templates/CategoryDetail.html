@@ -2,12 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop - Product Listing Page</title>
+    <title>PergiJalan - Explore More</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="/userStyle/assets/img/apple-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
     <link rel="stylesheet" href="/userStyle/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/userStyle/assets/css/templatemo.css">
@@ -70,15 +68,7 @@
                     <div class="col-md-6"  th:each="category,rowStat : ${category}" th:if="${category.id == ids}">
                         <h2 th:text="${category.name}"></h2>
                     </div>
-                    <div class="col-md-6 pb-4">
-                        <div class="d-flex">
-                            <select class="form-control">
-                                <option>Featured</option>
-                                <option>A to Z</option>
-                                <option>Item</option>
-                            </select>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-4" th:each="place,rowStat : ${entities}">
@@ -93,8 +83,6 @@
                             		<strong  style="white-space: nowrap; overflow: hidden; text-overflow: none;" th:if="${#strings.length(place[1]) >31}" th:text="${#strings.substring(place[1], 0, 31) + ' ...'}">
                             		</strong>
                             	</a>
-                            	<p th:text="${#strings.length('Bounce Street Asia - Trampoline Park')}"></p>
-                                <p class="text-muted">Jakarta Pusat</p>
                             </div>
                         </div>
                     </div>

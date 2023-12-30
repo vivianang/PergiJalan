@@ -379,7 +379,7 @@ public class AttractionController {
 		List<Category> category = categoryService.getAllCategory();
 		model.addAttribute("category", category);
 		
-		int pageSize = 1; // Set the number of items per page
+		int pageSize = 9; // Set the number of items per page
         Page<Object[]> entityPage = attractionService.getAttractionListByCategory(PageRequest.of(page-1, pageSize), id);
         model.addAttribute("entities", entityPage);
         model.addAttribute("ids", id);
