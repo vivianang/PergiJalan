@@ -55,11 +55,6 @@ import binus.skripsi.RatingWeb.repository.UserRepository;
 @Service
 public class AttractionService {
 	
-//	String homedir = "C://Users//u068815//Documents//RatingTempatWisata//";
-	
-	@Value("${photo.path}")
-	private String homedir;
-	
 	@Value("${db.photo.path}")
 	private String assetsPath;
 	
@@ -316,7 +311,6 @@ public class AttractionService {
 			checkboxJumat, String checkboxSabtu, String checkboxMinggu) throws IOException, InterruptedException {
 		
 		try {
-			
 			String date, fileName, filepath = "";
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
@@ -337,7 +331,7 @@ public class AttractionService {
 					System.out.println("masuk if");
 					date = dateFormat.format(new Date());
 					
-					File directory = new File(homedir + placeTxn.getName() + "/");
+					File directory = new File(System.getProperty("user.dir") + "/src/main/resources/static/attractionAssets/" + placeTxn.getName() + "/");
 
 					if (!directory.exists()) {
 						directory.mkdir();
@@ -616,7 +610,7 @@ public class AttractionService {
 		for (MultipartFile file : files) {
 			if ( !file.isEmpty()) {
 				date = dateFormat.format(new Date());
-				File directory = new File(homedir + place.getName() + "/");
+				File directory = new File(System.getProperty("user.dir") + "/src/main/resources/static/attractionAssets/" + place.getName() + "/");
 
 				if (!directory.exists()) {
 					directory.mkdir();

@@ -39,7 +39,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long>{
 			nativeQuery = true)
 	Page<Object[]> getAttractionByCategory(Pageable pageable, @Param("id") long id);
 	
-	@Query(value = "select tp.id, tp.name, (select photo_name from tbl_place_photo where place_id = tp.id order by id limit 1), " + 
+	@Query(value = "select distinct tp.id, tp.name, (select photo_name from tbl_place_photo where place_id = tp.id order by id limit 1), " + 
 			"       (select photo_path from tbl_place_photo where place_id = tp.id order by id limit 1), " + 
 			"       (pr.rating_pelayanan + pr.rating_suasana + pr.rating_kebersihan)/3 as c " + 
 			"from tbl_place tp " + 

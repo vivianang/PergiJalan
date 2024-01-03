@@ -184,7 +184,13 @@
            <input type="hidden" th:field="*{name}"/>
           	<h3 th:text="*{name}"></h3>
             <div class="card mb-3">
-              <img class="card-img img-fluid" src="/userStyle/assets/img/dufan1.jpg" alt="Card image cap" id="product-detail">
+            	<div th:if="${#lists.size(placePhoto) > 0}">
+            		<img class="card-img img-fluid" th:src="${placePhoto[0].photoPath} + '/' + ${placePhoto[0].photoName}" alt="Card image cap" id="product-detail">		
+				</div>
+				<div th:if="${#lists.size(placePhoto) == 0}">
+            		<img class="card-img img-fluid" src="/userStyle/assets/img/noimage.jpg" alt="Card image cap" id="product-detail">		
+				</div>
+              
             </div>
           </div>
           <!-- col end -->
@@ -194,8 +200,16 @@
 
                 <div class="container py-1">
       			<div class="row py-1">
-
-
+					
+					<div th:if="${rateKebersihanMessage}">
+						<div th:text="${rateKebersihanMessage}" style="color:red;margin:10px 0px;"></div>
+					</div>
+					<div th:if="${rateSuasanaMessage}">
+						<div th:text="${rateSuasanaMessage}" style="color:red;margin:10px 0px;"></div>
+					</div>
+					<div th:if="${ratePelayananMessage}">
+						<div th:text="${ratePelayananMessage}" style="color:red;margin:10px 0px;"></div>
+					</div>
                  <ul class="list-inline">
                   <li class="list-inline-item">
                     <h6>Nilai Kebersihan :</h6>
@@ -257,12 +271,12 @@
                 
                 	<div class="mb-3">
 	            		<h6>Judul Ulasan</h6>
-	            		<input type="text" class="form-control mt-1" id="attraction" autocomplete="on" th:object="${placeReviewTxn}" th:field="*{title}">
+	            		<input type="text" class="form-control mt-1" id="attraction" autocomplete="on" th:object="${placeReviewTxn}" th:field="*{title}" required>
          			</div>
                 
                 	<div class="mb-3">
 	            		<h6>Tulis Ulasan</h6>
-	            		<textarea id="message"  name="description" class="form-control mt-1" rows="8" th:object="${placeReviewTxn}" th:field="*{review}"></textarea>
+	            		<textarea id="message"  name="description" class="form-control mt-1" rows="8" th:object="${placeReviewTxn}" th:field="*{review}" required></textarea>
           			</div>
           			
           			<br>

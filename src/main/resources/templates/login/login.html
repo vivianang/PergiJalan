@@ -25,12 +25,15 @@
                         <div th:if="${#request.getParameter('error') == 'true'}"
 							style="color:red;margin:10px 0px;">
 							
+							
 							<span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
 					<!--		th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">-->
 							Username atau Password Salah.
 							</span>
 						</div>
-                        
+                        <div th:if="${signUpMessage}">
+            					<div th:text="${signUpMessage}" style="color:red;margin:10px 0px;"></div>
+            				</div>
                         <form th:action="@{/j_spring_security_check}" method="POST" class="register-form" id="register-form">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>

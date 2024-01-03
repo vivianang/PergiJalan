@@ -27,14 +27,14 @@ public interface PlacePhotoRepository extends JpaRepository<PlacePhoto, Long>{
 	
 	@Query(value = "select photo_path, photo_name " + 
 			"from tbl_place_review_photo " + 
-			"inner join skripsi.tbl_place_review tpr on tbl_place_review_photo.place_review_id = tpr.id " + 
+			"inner join tbl_place_review tpr on tbl_place_review_photo.place_review_id = tpr.id " + 
 			"where tpr.place_id=:id " + 
 			"union all " + 
 			"select photo_path, photo_name " + 
 			"from tbl_place_photo where place_id=:id  ",
 			countQuery= "select sum(a) from (select count(*) as a " + 
 					"      from tbl_place_review_photo prp " + 
-					"               inner join skripsi.tbl_place_review tpr on prp.place_review_id = tpr.id " + 
+					"               inner join tbl_place_review tpr on prp.place_review_id = tpr.id " + 
 					"      where tpr.place_id=:id " + 
 					"      union all " + 
 					"      select count(*) as a " + 

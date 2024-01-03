@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
  
@@ -29,7 +30,10 @@ public class LoginController {
 	
  
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
-    public String welcomePage(Model model) {
+    public String welcomePage(Model model, RedirectAttributes redirectAttributes) {
+    	if (redirectAttributes.containsAttribute("signUpMessage")) {
+	        model.addAttribute("signUpMessage", redirectAttributes.getAttribute("signUpMessage"));
+	    }
         return "login/login";
     }
  

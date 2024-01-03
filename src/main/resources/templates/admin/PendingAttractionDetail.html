@@ -349,12 +349,12 @@
 						                          <td th:if="${openHourTxn[6].isClosed == 1}" th:text="${openHourTxn[6].day + ': tutup'}"></td>
 						                        </tr>
 						                        <tr>
-						                          <td>Attraction added by</td>
+						                          <td>Attraction updated by</td>
 						                          <td></td>
 						                          <td th:text="${placeTxn.user.username}"></td>
 						                        </tr>
 						                        <tr>
-						                          <td>Attraction added date</td>
+						                          <td>Attraction updated date</td>
 						                          <td></td>
 						                          <td th:text="${placeTxn.insertDt}"></td>
 						                        </tr>
@@ -376,7 +376,7 @@
 			</div>
 			<!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <nav th:replace="~{_footer :: footer}"></nav>
+        <nav th:insert="admin/_footer :: footer"></nav>
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

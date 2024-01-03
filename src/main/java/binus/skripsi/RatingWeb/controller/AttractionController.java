@@ -287,21 +287,43 @@ public class AttractionController {
 	}
 	
 	@RequestMapping("/user/tulis-ulasan/{id}")
-	public String tulisUlasan(@PathVariable("id") long id, Model model) {
+	public String tulisUlasan(@PathVariable("id") long id, Model model, RedirectAttributes redirectAttributes) {
 		Place result = attractionService.getPlaceById(id);
+		List<PlacePhoto> placePhoto = attractionService.getPlacePhotoById(id);
 		model.addAttribute("place", result);
 		model.addAttribute("placeReviewTxn", new PlaceReviewTxn());
+		model.addAttribute("placePhoto", placePhoto);
+		
+		if (redirectAttributes.containsAttribute("rateKebersihanMessage")) {
+	        model.addAttribute("rateKebersihanMessage", redirectAttributes.getAttribute("rateKebersihanMessage"));
+	    } else if (redirectAttributes.containsAttribute("rateSuasanaMessage")) {
+	        model.addAttribute("rateSuasanaMessage", redirectAttributes.getAttribute("rateSuasanaMessage"));
+	    } else if (redirectAttributes.containsAttribute("ratePelayananMessage")) {
+	        model.addAttribute("ratePelayananMessage", redirectAttributes.getAttribute("ratePelayananMessage"));
+	    }
 		
 		return "GiveRating";
 	}
 	
 	@PostMapping("/user/tulis-ulasan")
-	public String tulisUlasan2(@RequestParam(name = "rateKebersihan", required = false) int rateKebersihan, 
-			@RequestParam(name = "rateSuasana", required = false) int rateSuasana, 
-			@RequestParam(name = "ratePelayanan", required = false) int ratePelayanan, Place place, PlaceReviewTxn placeReviewTxn,
+	public String tulisUlasan2(@RequestParam(name = "rateKebersihan", required = false, defaultValue = "0") int rateKebersihan, 
+			@RequestParam(name = "rateSuasana", required = false, defaultValue = "0") int rateSuasana, 
+			@RequestParam(name = "ratePelayanan", required = false, defaultValue = "0") int ratePelayanan, Place place, PlaceReviewTxn placeReviewTxn,
 			RedirectAttributes redirectAttributes, @RequestParam("files") MultipartFile[] files) throws IOException, InterruptedException {
 		
-		System.out.println("cccccccc" + placeReviewTxn);
+		if (rateKebersihan == 0) {
+			redirectAttributes.addFlashAttribute("rateKebersihanMessage", "Rating Kebersihan tidak boleh kosong");
+			return "redirect:/user/tulis-ulasan/" + place.getId();
+		}
+		if (rateSuasana == 0) {
+			redirectAttributes.addFlashAttribute("rateSuasanaMessage", "Rating Suasana tidak boleh kosong");
+			return "redirect:/user/tulis-ulasan/" + place.getId();
+		}
+		if (ratePelayanan == 0) {
+			redirectAttributes.addFlashAttribute("ratePelayananMessage", "Rating Pelayanan tidak boleh kosong");
+			return "redirect:/user/tulis-ulasan/" + place.getId();
+		}
+		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		
@@ -379,7 +401,7 @@ public class AttractionController {
 		List<Category> category = categoryService.getAllCategory();
 		model.addAttribute("category", category);
 		
-		int pageSize = 9; // Set the number of items per page
+		int pageSize = 12; // Set the number of items per page
         Page<Object[]> entityPage = attractionService.getAttractionListByCategory(PageRequest.of(page-1, pageSize), id);
         model.addAttribute("entities", entityPage);
         model.addAttribute("ids", id);
@@ -391,7 +413,7 @@ public class AttractionController {
 	@RequestMapping("/user/gallery-photo/{id}")
 	public String viewGalleryPhoto(@PathVariable("id") long id, Model model, @RequestParam(defaultValue = "1") int page) {
 		Place result = attractionService.getPlaceById(id);
-		int pageSize = 12; // Set the number of items per page
+		int pageSize = 50; // Set the number of items per page
         Page<Object[]> entityPage = attractionService.getAllPhoto(PageRequest.of(page-1, pageSize), id);
         model.addAttribute("entities", entityPage);
         model.addAttribute("ids", id);

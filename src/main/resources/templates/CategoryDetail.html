@@ -25,6 +25,10 @@
 	overflow:hidden;
 	text-overflow:ellipsis;
 }
+.square-img {
+    object-fit: cover;
+    aspect-ratio: 1 / 1; /* Set the aspect ratio (width / height) as needed */
+}
 </style>
 </head>
 
@@ -74,15 +78,17 @@
                     <div class="col-md-4" th:each="place,rowStat : ${entities}">
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="aaa card-img rounded-0 img-fluid" th:src="${place[4]} + '/' + ${place[3]}">
+                            	<a th:if="${place[3] == null}" th:href="@{'/user/attraction-detail/' + ${place[0]}}">
+                            		<img src="/userStyle/assets/img/noimage.jpg" class="card-img-top img-fluid square-img" alt="...">
+		                        </a>
+		                    	
+		                        <a th:if="${place[3] != null}" th:href="@{'/user/attraction-detail/' + ${place[0]}}">
+		                            <img th:src="${place[4]} + '/' + ${place[3]}" class="card-img-top img-fluid square-img" alt="...">
+		                        </a>
                             </div>
                             <div class="card-body">
-                            	<a th:href="@{'/user/attraction-detail/' + ${place[0]}}" class="h3 text-decoration-none">
-                            		<strong  style="white-space: nowrap; overflow: hidden; text-overflow: none;" th:if="${#strings.length(place[1]) <31}" th:text="${place[1]}">
-                            		</strong>
-                            		<strong  style="white-space: nowrap; overflow: hidden; text-overflow: none;" th:if="${#strings.length(place[1]) >31}" th:text="${#strings.substring(place[1], 0, 31) + ' ...'}">
-                            		</strong>
-                            	</a>
+                            	<a th:href="@{'/user/attraction-detail/' + ${place[0]}}" class="h3 text-decoration-none text-dark"><b th:text="${place[1]}"></b></a>
+                            
                             </div>
                         </div>
                     </div>

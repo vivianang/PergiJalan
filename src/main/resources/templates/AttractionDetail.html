@@ -199,15 +199,17 @@ margin-bottom: 16px;
 							</ul>
 							<h6>Jam Buka:</h6>
 							<ul class="list-unstyled pb-3">
-								<li th:each="data : ${openHour}"
-									th:text="${data.day} + ': ' + ${data.openHour} + ' - ' + ${data.closedHour}"></li>
+							    <li th:each="data : ${openHour}">
+							        <th:block th:if="${data.isClosed == 0}" th:text="${data.day} + ': ' + ${data.openHour} + ' - ' + ${data.closedHour}"></th:block>
+							        <th:block th:if="${data.isClosed == 1}"  th:text="${data.day} + ': tutup'"></th:block>
+							    </li>
 							</ul>
 
 							<h6>Harga Tiket:</h6>
 							<ul class="list-unstyled pb-3">
 								<li th:each="data : ${ticketPrice}"
 									th:text="${data.day} + ': Rp. ' + ${data.ticketPrice}"></li>
-
+								
 							</ul>
 
 						<form th:object="${place}" th:action="@{/user/attraction-action}"

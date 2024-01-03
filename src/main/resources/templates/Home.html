@@ -61,6 +61,12 @@
 	width: 305px;
 	height:300px;
 }
+
+.square-img {
+    object-fit: cover;
+    aspect-ratio: 1 / 1; /* Set the aspect ratio (width / height) as needed */
+}
+
 </style>
 
 </head>
@@ -127,11 +133,11 @@
                     <div class="card h-100">
 
                     	<a th:if="${newPlace[3] == null}" th:href="@{'/user/attraction-detail/' + ${newPlace[0]}}">
-                            <img src="/userStyle/assets/img/noimage.jpg" class="abcde card-img-top" alt="...">
+                            <img src="/userStyle/assets/img/noimage.jpg" class="card-img-top img-fluid square-img" alt="...">
                         </a>
                     	
                         <a th:if="${newPlace[3] != null}" th:href="@{'/user/attraction-detail/' + ${newPlace[0]}}">
-                            <img th:src="${newPlace[3]} + '/' + ${newPlace[2]}" class="abcde card-img-top" alt="...">
+                            <img th:src="${newPlace[3]} + '/' + ${newPlace[2]}" class="card-img-top img-fluid square-img" alt="...">
                         </a>
                         <div class="card-body">
                             <a th:href="@{'/user/attraction-detail/' + ${newPlace[0]}}" class="h3 text-decoration-none text-dark"><b th:text="${newPlace[1]}">Grand Indonesia</b></a>
@@ -163,11 +169,11 @@
                     <div class="card h-100">
 
                     	<a th:if="${tamanHiburanPlace[3] == null}" th:href="@{'/user/attraction-detail/' + ${tamanHiburanPlace[0]}}">
-                            <img src="/userStyle/assets/img/noimage.jpg" class="abcde card-img-top" alt="...">
+                            <img src="/userStyle/assets/img/noimage.jpg" class="card-img-top img-fluid square-img" alt="...">
                         </a>
                     	
                         <a th:if="${tamanHiburanPlace[3] != null}" th:href="@{'/user/attraction-detail/' + ${tamanHiburanPlace[0]}}">
-                            <img th:src="${tamanHiburanPlace[3]} + '/' + ${tamanHiburanPlace[2]}" class="abcde card-img-top" alt="...">
+                            <img th:src="${tamanHiburanPlace[3]} + '/' + ${tamanHiburanPlace[2]}" class="card-img-top img-fluid square-img" alt="...">
                         </a>
                         <div class="card-body">
                             <a th:href="@{'/user/attraction-detail/' + ${tamanHiburanPlace[0]}}" class="h3 text-decoration-none text-dark"><b th:text="${tamanHiburanPlace[1]}">Grand Indonesia</b></a>
