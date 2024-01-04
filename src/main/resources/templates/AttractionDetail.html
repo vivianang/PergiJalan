@@ -184,8 +184,11 @@ margin-bottom: 16px;
 								<li class="list-inline-item">
 									<h6>Website:</h6>
 								</li>
-								<li class="list-inline-item">
+								<li class="list-inline-item" th:if="*{website != ''}">
 									<a th:href="*{website}">Click Here</a>
+								</li>
+								<li class="list-inline-item" th:if="*{website == ''}">
+									<p>-</p>
 								</li>
 							</ul>
 
